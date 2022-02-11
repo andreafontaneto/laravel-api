@@ -14,6 +14,17 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
+/***
+LE ROTTE con middleware non servono perchè la vista essendo pubblica non ha bisogno di dati privati
+***/
+
+// quindi faccio un altra rotta normale
+// tutte le rotte inserite qui in "api.php" avranno come prefisso "api/..." (es. api/prova)
+Route::get('prova', function(){
+    return response()->json(
+        [
+            "name" => "Andrea", 
+            "lastname" => "Fontaneto"
+        ]
+    );
 });
