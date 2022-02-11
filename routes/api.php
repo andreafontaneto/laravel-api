@@ -18,6 +18,8 @@ use Illuminate\Support\Facades\Route;
 LE ROTTE con middleware non servono perchè la vista essendo pubblica non ha bisogno di dati privati
 ***/
 
+
+/*** TEST API ROUTE ***/
 // quindi faccio un altra rotta normale
 // tutte le rotte inserite qui in "api.php" avranno come prefisso "api/..." (es. api/prova)
 Route::get('prova', function(){
@@ -52,3 +54,6 @@ Route::get('prova', function(){
     // posso anche passare più dati
     return response()->json(compact('status', 'user'));
 });
+
+/*** API ROUTE ***/
+Route::get('posts', 'Api\PostController@index');
