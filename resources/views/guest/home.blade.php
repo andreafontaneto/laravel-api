@@ -9,7 +9,8 @@
 </head>
 <body>
 
-  <h1>HOME</h1>
+  {{-- qui viene iniettato VUE --}}
+  <div id="app"></div>
   
 
   <script src="{{ asset('js/guest.js') }}"></script>
