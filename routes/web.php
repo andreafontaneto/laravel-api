@@ -14,9 +14,10 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('guest.home');
-})->name('home');
+// le rotte di "guest" verrano gestite da Vue quindi QUI non servono più 
+// Route::get('/', function () {
+//     return view('guest.home');
+// })->name('home');
 
 Auth::routes();
 
@@ -40,5 +41,13 @@ Route::middleware('auth')
             Route::get('/', 'HomeController@index')->name('index');
 
             Route::resource('/posts', 'PostController');
-        })
-;
+        });
+
+/*** QUESTA rotta si mette DOPO perchè la lettura delle rotte è fatta dall'alto verso il basso ***/
+
+// MENTRE per qualsiasi altra rotta...
+// restituiscimi la vista home di guest
+// dove "any" (che è una variabile) è qualsiasi altra cosa (.*)
+Route::get('{any?}', function(){
+    return view('guest.home');
+})->where('any', '.*')->name('home');
