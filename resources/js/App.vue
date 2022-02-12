@@ -1,9 +1,13 @@
 <template>
 
 <div>
+  
   <Header />
-  <main>VUE</main>
+  
+  <Posts />
+  
   <Footer />
+
 </div>
   
 </template>
@@ -12,6 +16,7 @@
 
 import Header from './components/partials/Header.vue';
 import Footer from './components/partials/Footer.vue';
+import Posts from './components/Posts.vue';
 
 export default {
   name: 'App',
@@ -19,6 +24,7 @@ export default {
   components: {
     Header,
     Footer,
+    Posts
   }
 }
 </script>
