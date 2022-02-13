@@ -1985,6 +1985,15 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'Posts',
@@ -2010,7 +2019,11 @@ __webpack_require__.r(__webpack_exports__);
       var _this = this;
 
       var page = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1;
-      // console.log(axios);
+      // richiamo il data "posts" per gestire il loading
+      // mettendo posts = null ogni volta resetta i post e visualizza il loading per fare un caricamento ad ogni click
+      // altrimenti rimane tutto fermo e vengono sostituiti i post quando vengono caricati (quando arriva il dato)
+      this.posts = null; // console.log(axios);
+
       axios.get(this.apiUrl + page).then(function (res) {
         // SE in Api > PostController abbiamo passato $post SENZA compact()
         // allora "res" è direttamente l'array (data) che contiene tutti i post
@@ -3454,72 +3467,79 @@ var render = function () {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("main", [
-    _c(
-      "div",
-      { staticClass: "container" },
-      [
-        _c("h1", [_vm._v("I miei Posts")]),
-        _vm._v(" "),
-        _vm._l(_vm.posts, function (post) {
-          return _c("PostItem", {
-            key: "post" + post.id,
-            attrs: { post: post },
-          })
-        }),
-        _vm._v(" "),
-        _c(
-          "div",
-          { staticClass: "pagination" },
-          [
-            _c(
-              "button",
-              {
-                attrs: { disabled: _vm.pagination.current === 1 },
-                on: {
-                  click: function ($event) {
-                    return _vm.getPosts(_vm.pagination.current - 1)
-                  },
-                },
-              },
-              [_vm._v(" << ")]
-            ),
-            _vm._v(" "),
-            _vm._l(_vm.pagination.last, function (i) {
-              return _c(
-                "button",
-                {
-                  key: "page" + i,
-                  attrs: { disabled: _vm.pagination.current === i },
-                  on: {
-                    click: function ($event) {
-                      return _vm.getPosts(i)
+    _vm.posts
+      ? _c("div", [
+          _c(
+            "div",
+            { staticClass: "container" },
+            [
+              _c("h1", [_vm._v("I miei Posts")]),
+              _vm._v(" "),
+              _vm._l(_vm.posts, function (post) {
+                return _c("PostItem", {
+                  key: "post" + post.id,
+                  attrs: { post: post },
+                })
+              }),
+              _vm._v(" "),
+              _c(
+                "div",
+                { staticClass: "pagination" },
+                [
+                  _c(
+                    "button",
+                    {
+                      attrs: { disabled: _vm.pagination.current === 1 },
+                      on: {
+                        click: function ($event) {
+                          return _vm.getPosts(_vm.pagination.current - 1)
+                        },
+                      },
                     },
-                  },
-                },
-                [_vm._v("\n        " + _vm._s(i) + "\n      ")]
-              )
-            }),
-            _vm._v(" "),
-            _c(
-              "button",
-              {
-                attrs: {
-                  disabled: _vm.pagination.current === _vm.pagination.last,
-                },
-                on: {
-                  click: function ($event) {
-                    return _vm.getPosts(_vm.pagination.current + 1)
-                  },
-                },
-              },
-              [_vm._v(" >> ")]
-            ),
-          ],
-          2
-        ),
-      ],
-      2
-    ),
+                    [_vm._v(" << ")]
+                  ),
+                  _vm._v(" "),
+                  _vm._l(_vm.pagination.last, function (i) {
+                    return _c(
+                      "button",
+                      {
+                        key: "page" + i,
+                        attrs: { disabled: _vm.pagination.current === i },
+                        on: {
+                          click: function ($event) {
+                            return _vm.getPosts(i)
+                          },
+                        },
+                      },
+                      [_vm._v("\n          " + _vm._s(i) + "\n        ")]
+                    )
+                  }),
+                  _vm._v(" "),
+                  _c(
+                    "button",
+                    {
+                      attrs: {
+                        disabled:
+                          _vm.pagination.current === _vm.pagination.last,
+                      },
+                      on: {
+                        click: function ($event) {
+                          return _vm.getPosts(_vm.pagination.current + 1)
+                        },
+                      },
+                    },
+                    [_vm._v(" >> ")]
+                  ),
+                ],
+                2
+              ),
+            ],
+            2
+          ),
+        ])
+      : _c("div", { staticClass: "container" }, [
+          _c("h5", [_vm._v("LOADING...")]),
+        ]),
   ])
 }
 var staticRenderFns = []

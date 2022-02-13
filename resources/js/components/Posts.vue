@@ -1,35 +1,44 @@
 <template>
 
   <main>
-    <div class="container">
+    <div v-if="posts">
+
+      <div class="container">
       
-      <h1>I miei Posts</h1>
+        <h1>I miei Posts</h1>
 
-      <PostItem 
-        v-for="post in posts"
-        :key="`post${post.id}`"
-        :post="post"
-      />
+        <PostItem 
+          v-for="post in posts"
+          :key="`post${post.id}`"
+          :post="post"
+        />
 
-      <div class="pagination">
-        <button 
-        @click="getPosts(pagination.current - 1)"
-        :disabled="pagination.current === 1"> << </button>
+        <div class="pagination">
+          <button 
+          @click="getPosts(pagination.current - 1)"
+          :disabled="pagination.current === 1"> << </button>
 
-        <button
-          v-for="i in pagination.last"
-          :key="`page${i}`"
-          @click="getPosts(i)"
-          :disabled="pagination.current === i">
-          {{ i }}
-        </button>
+          <button
+            v-for="i in pagination.last"
+            :key="`page${i}`"
+            @click="getPosts(i)"
+            :disabled="pagination.current === i">
+            {{ i }}
+          </button>
 
-        <button 
-        @click="getPosts(pagination.current + 1)"
-        :disabled="pagination.current === pagination.last"> >> </button>
+          <button 
+          @click="getPosts(pagination.current + 1)"
+          :disabled="pagination.current === pagination.last"> >> </button>
+        </div>
+
       </div>
 
     </div>
+
+    <div v-else class="container">
+      <h5>LOADING...</h5>
+    </div>
+    
   </main>
 
 </template>
@@ -65,6 +74,10 @@ export default {
   methods: {
 
     getPosts(page = 1){
+      // richiamo il data "posts" per gestire il loading
+      // mettendo posts = null ogni volta resetta i post e visualizza il loading per fare un caricamento ad ogni click
+      // altrimenti rimane tutto fermo e vengono sostituiti i post quando vengono caricati (quando arriva il dato)
+      this.posts = null;
       // console.log(axios);
       axios.get(this.apiUrl + page)
         .then(res => {
