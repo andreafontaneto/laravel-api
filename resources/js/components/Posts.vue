@@ -5,12 +5,11 @@
       
       <h1>I miei Posts</h1>
 
-      <PostItem />
-      <PostItem />
-      <PostItem />
-      <PostItem />
-      <PostItem />
-      <PostItem />
+      <PostItem 
+        v-for="post in posts"
+        :key="post.id"
+        :post="post"
+      />
 
     </div>
   </main>
