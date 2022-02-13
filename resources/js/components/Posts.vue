@@ -7,7 +7,7 @@
 
       <PostItem 
         v-for="post in posts"
-        :key="post.id"
+        :key="`post${post.id}`"
         :post="post"
       />
 
@@ -18,7 +18,7 @@
 
         <button
           v-for="i in pagination.last"
-          :key="i"
+          :key="`page${i}`"
           @click="getPosts(i)"
           :disabled="pagination.current === i">
           {{ i }}

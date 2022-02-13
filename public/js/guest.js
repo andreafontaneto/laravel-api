@@ -3461,7 +3461,10 @@ var render = function () {
         _c("h1", [_vm._v("I miei Posts")]),
         _vm._v(" "),
         _vm._l(_vm.posts, function (post) {
-          return _c("PostItem", { key: post.id, attrs: { post: post } })
+          return _c("PostItem", {
+            key: "post" + post.id,
+            attrs: { post: post },
+          })
         }),
         _vm._v(" "),
         _c(
@@ -3485,7 +3488,7 @@ var render = function () {
               return _c(
                 "button",
                 {
-                  key: i,
+                  key: "page" + i,
                   attrs: { disabled: _vm.pagination.current === i },
                   on: {
                     click: function ($event) {
