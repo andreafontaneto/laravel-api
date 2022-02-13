@@ -1,10 +1,12 @@
 <template>
 
   <article>
-    <h3>
-      <a href="#">{{ post.title }}</a>
-    </h3>
+    <h3><a href="#">{{ post.title }}</a></h3>
     <p class="date">{{ formatDate }}</p>
+    <p v-if="post.category" class="category">{{ post.category.name }}</p>
+    <div v-if="post.tags">
+      <span v-for="tag in post.tags" :key="`tag${tag.id}`" class="tags">{{ tag.name }}</span>
+    </div>
     <p class="post-content">{{ truncateText }}</p>
   </article>
   
@@ -70,8 +72,26 @@ article{
     margin-bottom: 5px;
   }
 
+  .category{
+    margin: 10px 0;
+    font-weight: bold;
+    font-style: italic;
+    background-color: rgb(0, 140, 255);
+    display: inline-block;
+    padding: 5px 15px;
+    color: white;
+  }
+
+  .tags{
+    font-size: 12px;
+    margin-right: 10px; 
+    background-color: aqua;
+    padding: 5px 15px;
+  }
+
   .post-content{
     font-size: 14px;
+    margin-top: 10px;
   }
 }
 

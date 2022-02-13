@@ -2132,6 +2132,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'PostItem',
   props: {
@@ -2232,7 +2234,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "article[data-v-49c43f95] {\n  margin-bottom: 30px;\n}\narticle h3[data-v-49c43f95] {\n  margin-bottom: 5px;\n}\narticle h3 a[data-v-49c43f95] {\n  text-decoration: none;\n  color: black;\n}\narticle h3 a[data-v-49c43f95]:hover {\n  color: #3131ff;\n  text-decoration: underline;\n}\narticle .date[data-v-49c43f95] {\n  font-size: 12px;\n  font-style: italic;\n  margin-bottom: 5px;\n}\narticle .post-content[data-v-49c43f95] {\n  font-size: 14px;\n}", ""]);
+exports.push([module.i, "article[data-v-49c43f95] {\n  margin-bottom: 30px;\n}\narticle h3[data-v-49c43f95] {\n  margin-bottom: 5px;\n}\narticle h3 a[data-v-49c43f95] {\n  text-decoration: none;\n  color: black;\n}\narticle h3 a[data-v-49c43f95]:hover {\n  color: #3131ff;\n  text-decoration: underline;\n}\narticle .date[data-v-49c43f95] {\n  font-size: 12px;\n  font-style: italic;\n  margin-bottom: 5px;\n}\narticle .category[data-v-49c43f95] {\n  margin: 10px 0;\n  font-weight: bold;\n  font-style: italic;\n  background-color: #008cff;\n  display: inline-block;\n  padding: 5px 15px;\n  color: white;\n}\narticle .tags[data-v-49c43f95] {\n  font-size: 12px;\n  margin-right: 10px;\n  background-color: aqua;\n  padding: 5px 15px;\n}\narticle .post-content[data-v-49c43f95] {\n  font-size: 14px;\n  margin-top: 10px;\n}", ""]);
 
 // exports
 
@@ -3641,6 +3643,24 @@ var render = function () {
     ]),
     _vm._v(" "),
     _c("p", { staticClass: "date" }, [_vm._v(_vm._s(_vm.formatDate))]),
+    _vm._v(" "),
+    _vm.post.category
+      ? _c("p", { staticClass: "category" }, [
+          _vm._v(_vm._s(_vm.post.category.name)),
+        ])
+      : _vm._e(),
+    _vm._v(" "),
+    _vm.post.tags
+      ? _c(
+          "div",
+          _vm._l(_vm.post.tags, function (tag) {
+            return _c("span", { key: "tag" + tag.id, staticClass: "tags" }, [
+              _vm._v(_vm._s(tag.name)),
+            ])
+          }),
+          0
+        )
+      : _vm._e(),
     _vm._v(" "),
     _c("p", { staticClass: "post-content" }, [
       _vm._v(_vm._s(_vm.truncateText)),
