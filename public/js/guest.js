@@ -2083,10 +2083,34 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'PostItem',
   props: {
     'post': Object
+  },
+  computed: {
+    truncateText: function truncateText() {
+      return this.post.content.substr(0, 100) + '...';
+    },
+    formatDate: function formatDate() {
+      // inizializzo una nuova classe "Date" che prende come parametro la data che gli passo
+      // se non passo nessun parametro ( es. new Date() ) prende la data di oggi
+      var d = new Date(this.post.created_at);
+      var day = d.getDate(); // aggiungo +1 perchè parte da 0 e va fino a 11
+      // quindi gennaio sarebbe 0, febbraio 1, marzo 2, ecc.
+
+      var month = d.getMonth() + 1;
+      var year = d.getFullYear();
+
+      if (day < 10 || month < 10) {
+        day = '0' + day;
+        month = '0' + month;
+      }
+
+      return "".concat(day, "/").concat(month, "/").concat(year);
+    }
   }
 });
 
@@ -2161,7 +2185,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "article[data-v-49c43f95] {\n  margin-bottom: 30px;\n}\narticle h3[data-v-49c43f95] {\n  margin-bottom: 5px;\n}\narticle .date[data-v-49c43f95] {\n  font-size: 12px;\n  font-style: italic;\n  margin-bottom: 5px;\n}\narticle .post-content[data-v-49c43f95] {\n  font-size: 14px;\n}", ""]);
+exports.push([module.i, "article[data-v-49c43f95] {\n  margin-bottom: 30px;\n}\narticle h3[data-v-49c43f95] {\n  margin-bottom: 5px;\n}\narticle h3 a[data-v-49c43f95] {\n  text-decoration: none;\n  color: black;\n}\narticle h3 a[data-v-49c43f95]:hover {\n  color: #3131ff;\n  text-decoration: underline;\n}\narticle .date[data-v-49c43f95] {\n  font-size: 12px;\n  font-style: italic;\n  margin-bottom: 5px;\n}\narticle .post-content[data-v-49c43f95] {\n  font-size: 14px;\n}", ""]);
 
 // exports
 
@@ -3504,12 +3528,14 @@ var render = function () {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("article", [
-    _c("h3", [_vm._v(_vm._s(_vm.post.title))]),
+    _c("h3", [
+      _c("a", { attrs: { href: "#" } }, [_vm._v(_vm._s(_vm.post.title))]),
+    ]),
     _vm._v(" "),
-    _c("p", { staticClass: "date" }, [_vm._v(_vm._s(_vm.post.created_at))]),
+    _c("p", { staticClass: "date" }, [_vm._v(_vm._s(_vm.formatDate))]),
     _vm._v(" "),
     _c("p", { staticClass: "post-content" }, [
-      _vm._v(_vm._s(_vm.post.content)),
+      _vm._v(_vm._s(_vm.truncateText)),
     ]),
   ])
 }

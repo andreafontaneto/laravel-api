@@ -1,9 +1,11 @@
 <template>
 
   <article>
-    <h3>{{ post.title }}</h3>
-    <p class="date">{{ post.created_at }}</p>
-    <p class="post-content">{{ post.content }}</p>
+    <h3>
+      <a href="#">{{ post.title }}</a>
+    </h3>
+    <p class="date">{{ formatDate }}</p>
+    <p class="post-content">{{ truncateText }}</p>
   </article>
   
 </template>
@@ -14,6 +16,31 @@ export default {
 
   props: {
     'post': Object
+  },
+
+  computed: {
+    truncateText(){
+      return this.post.content.substr(0, 100) + '...';
+    },
+
+    formatDate(){
+      
+      // inizializzo una nuova classe "Date" che prende come parametro la data che gli passo
+      // se non passo nessun parametro ( es. new Date() ) prende la data di oggi
+      const d = new Date(this.post.created_at);
+      let day = d.getDate();
+      // aggiungo +1 perchè parte da 0 e va fino a 11
+      // quindi gennaio sarebbe 0, febbraio 1, marzo 2, ecc.
+      let month = d.getMonth() + 1;
+      const year = d.getFullYear();
+
+      if(day < 10 || month < 10){
+        day = '0' + day;
+        month = '0' + month;
+      }
+
+      return `${day}/${month}/${year}`;
+    }
   }
 }
 </script>
@@ -25,6 +52,16 @@ article{
 
   h3{
     margin-bottom: 5px;
+
+    a{
+      text-decoration: none;
+      color: black;
+
+      &:hover{
+        color: rgb(49, 49, 255);
+        text-decoration: underline;
+      }
+    }
   }
 
   .date{
