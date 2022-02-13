@@ -1967,6 +1967,24 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'Posts',
@@ -1975,8 +1993,12 @@ __webpack_require__.r(__webpack_exports__);
   },
   data: function data() {
     return {
-      apiUrl: 'http://127.0.0.1:8000/api/posts',
-      posts: null // si potrebbe fare un oggetto, ma così si gestisce il loading
+      // apiUrl: 'http://127.0.0.1:8000/api/posts',
+      // la nuova apiUrl per visualizzare le pagine diventa ".../posts?page=" più il numero della pagina
+      apiUrl: 'http://127.0.0.1:8000/api/posts?page=',
+      posts: null,
+      // si potrebbe fare un oggetto, ma così si gestisce il loading
+      pagination: {} // per recuperare i bottoni della paginazione faccio un oggetto "pagination" (per comodità) vuoto
 
     };
   },
@@ -1987,8 +2009,9 @@ __webpack_require__.r(__webpack_exports__);
     getPosts: function getPosts() {
       var _this = this;
 
+      var page = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1;
       // console.log(axios);
-      axios.get(this.apiUrl).then(function (res) {
+      axios.get(this.apiUrl + page).then(function (res) {
         // SE in Api > PostController abbiamo passato $post SENZA compact()
         // allora "res" è direttamente l'array (data) che contiene tutti i post
         // SE in Api > PostController abbiamo passato $post TRAMITE compact()
@@ -1996,8 +2019,19 @@ __webpack_require__.r(__webpack_exports__);
         // per vedere l'array pulito (senza oggetto come genitore) dobbiamo passare "res.data.posts"
         // console.log(res);
         // console.log(res.data);
-        _this.posts = res.data;
+        // this.posts = res.data;
+        // avendo aggiungo il paginate() nel PostController, nel JSON si avranno altre informazioni e non solo l'array con tutti i post
+        // quindi da res.data si aggiugnerà ancora .data (res.data.data) per prendere SOLO l'array con tutti i post
+        _this.posts = res.data.data; // adesso dico all'oggetto vuoto "pagination" salvato in data() di recuperare i bottoni per la paginazione come proprietà
+
+        _this.pagination = {
+          current: res.data.current_page,
+          // chiamando pagination.current saprò a che pagina sono
+          last: res.data.last_page // chiamando pagination.last_page saprò qual'è l'ultima pagina
+
+        };
         console.log(_this.posts);
+        console.log(_this.pagination);
       });
     }
   }
@@ -2128,7 +2162,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "main[data-v-4ac4d2f8] {\n  margin: 30px 0;\n}\nmain h1[data-v-4ac4d2f8] {\n  margin-bottom: 20px;\n}", ""]);
+exports.push([module.i, "main[data-v-4ac4d2f8] {\n  margin: 30px 0;\n}\nmain h1[data-v-4ac4d2f8] {\n  margin-bottom: 20px;\n}\nmain .pagination[data-v-4ac4d2f8] {\n  padding-bottom: 50px;\n}\nmain .pagination button[data-v-4ac4d2f8] {\n  padding: 10px;\n}", ""]);
 
 // exports
 
@@ -3429,6 +3463,57 @@ var render = function () {
         _vm._l(_vm.posts, function (post) {
           return _c("PostItem", { key: post.id, attrs: { post: post } })
         }),
+        _vm._v(" "),
+        _c(
+          "div",
+          { staticClass: "pagination" },
+          [
+            _c(
+              "button",
+              {
+                attrs: { disabled: _vm.pagination.current === 1 },
+                on: {
+                  click: function ($event) {
+                    return _vm.getPosts(_vm.pagination.current - 1)
+                  },
+                },
+              },
+              [_vm._v(" << ")]
+            ),
+            _vm._v(" "),
+            _vm._l(_vm.pagination.last, function (i) {
+              return _c(
+                "button",
+                {
+                  key: i,
+                  attrs: { disabled: _vm.pagination.current === i },
+                  on: {
+                    click: function ($event) {
+                      return _vm.getPosts(i)
+                    },
+                  },
+                },
+                [_vm._v("\n        " + _vm._s(i) + "\n      ")]
+              )
+            }),
+            _vm._v(" "),
+            _c(
+              "button",
+              {
+                attrs: {
+                  disabled: _vm.pagination.current === _vm.pagination.last,
+                },
+                on: {
+                  click: function ($event) {
+                    return _vm.getPosts(_vm.pagination.current + 1)
+                  },
+                },
+              },
+              [_vm._v(" >> ")]
+            ),
+          ],
+          2
+        ),
       ],
       2
     ),
